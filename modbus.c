@@ -49,12 +49,10 @@ static void applyStateFromRegister(void){
         if(modbusRegisters[15] != requestedState)
                 modbusRegisters[15] = requestedState;
 
-        if(machineState != requestedState){
-                machineState = requestedState;
-                selectContent(machineState);
-        }
+        if(machineState != requestedState)
+                modbusStateUpdated = 1;
 
-        modbusStateUpdated = 1;
+        modbusReceived = 1;
 }
 
 void handleRxPacket(void){
