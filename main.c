@@ -148,15 +148,10 @@ int main(void){
 			}	
 		}
 		
-                if(modbusStateUpdated)
+                if(modbusReceived && animationRunning == 0)
                 {
                         machineState = modbusRegisters[15];
-                }
-
-                if(modbusStateUpdated || modbusReceived)
-                {
                         selectContent(machineState);
-                        modbusStateUpdated = 0;
                         modbusReceived = 0;
                 }
 		
