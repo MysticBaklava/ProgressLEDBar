@@ -4,7 +4,6 @@
 
 uint8_t slaveAddress = DEFAULT_DEVICE_ADDRESS;
 uint16_t modbusRegisters[MODBUS_REGISTER_COUNT];
-uint16_t prevRegValues[4];
 uint16_t registerAddress;
 
 uint16_t registerCount;

@@ -3,7 +3,21 @@
 #include "bezier.h"
 
 
-uint32_t segBuf[4][96];
+#define LED_BUFFER_MAX (sizeof(led) / sizeof(led[0]))
+#define SEGMENT_VIRTUAL_MAX (LED_BUFFER_MAX * 4)
+
+static uint16_t getVirtualLen(void) {
+    uint32_t virtualLen = ledCount * 4U;
+    if (virtualLen == 0) {
+        return 0;
+    }
+    if (virtualLen > SEGMENT_VIRTUAL_MAX) {
+        virtualLen = SEGMENT_VIRTUAL_MAX;
+    }
+    return (uint16_t)virtualLen;
+}
+
+uint32_t segBuf[4][SEGMENT_VIRTUAL_MAX];
 struct Color color;
 
 void getColor(uint16_t segmentNr, uint16_t colorNr);
@@ -21,10 +35,13 @@ void getColor(uint16_t segmentNr, uint16_t colorNr){
 }
 
 void createSegment(uint16_t totalLen, uint16_t segmentNr){
-	//her segmentin 64 ledlik bufferi var. 
-	uint16_t segmentLen, animationLen;	
-	uint16_t totalColorSpan, colorSpan, colorNr;
-	uint16_t i,j,k;
+        //her segmentin sanal bufferi LED uzunluğunun 4 katııdır.
+        uint16_t segmentLen, animationLen;
+        uint16_t totalColorSpan, colorSpan, colorNr;
+        uint16_t i,j,k;
+
+        uint16_t virtualLen = getVirtualLen();
+        if (virtualLen == 0) return;
 	
 	if(s.segment[segmentNr].span == 0) return;																		//this is the segments rational len to the physical led strip, if zero, do not render
 	
@@ -35,15 +52,15 @@ void createSegment(uint16_t totalLen, uint16_t segmentNr){
 	for(i=0;i<4;i++)
 		totalColorSpan += s.segment[segmentNr].patternColor[i].span;	
 	
-	if(totalColorSpan > segmentLen)
-			animationLen = totalColorSpan;
-	else
-			animationLen = segmentLen;
+        if(totalColorSpan > segmentLen)
+                        animationLen = totalColorSpan;
+        else
+                        animationLen = segmentLen;
 	
-	colorNr = 0;
-	j = 0;
-	animationLen = 64;
-	while(animationLen > 0)
+        colorNr = 0;
+        j = 0;
+        animationLen = virtualLen;
+        while(animationLen > 0)
 	{
 		colorSpan = s.segment[segmentNr].patternColor[colorNr].span;	
 		
@@ -72,11 +89,11 @@ void createSegment(uint16_t totalLen, uint16_t segmentNr){
 		i++;
 	}
 	*/
-	if(s.segment[segmentNr].speed > 0){
-		if(s.segment[segmentNr].animCount++ == 64){
-			s.segment[segmentNr].animCount = 0;
-		}
-	}
+        if(s.segment[segmentNr].speed > 0){
+                if(++s.segment[segmentNr].animCount >= virtualLen){
+                        s.segment[segmentNr].animCount = 0;
+                }
+        }
 }
 
 
@@ -96,7 +113,7 @@ uint16_t calculateSegmentsLen(uint16_t segmentNr, uint16_t totalLen){
 
 static uint32_t oldLedBuffer[100];
 static uint16_t transitionPos = 0;
-static const uint16_t transitionStep = 1;  // Her frame'de ka� LED ilerlesin
+static const uint16_t transitionStep = 1;  // Her frame'de kac LED ilerlesin
 static uint8_t transitioning = 0;
 
 
@@ -109,12 +126,18 @@ void initSegmentTransition(void) {
 
 
 void segmentsRender(void) {
+    const uint16_t virtualLen = getVirtualLen();
+
+    if (virtualLen == 0) {
+        return;
+    }
+
     for (int segmentNr = 0; segmentNr < 4; segmentNr++) {
         if (s.segment[segmentNr].span > 0) {
             switch (s.segment[segmentNr].renderMode) {
                 case RENDER_STANDARD: {
                     int k = 0;
-                    while (k < 64) {
+                    while (k < virtualLen) {
                         for (int clr = 0; clr < 4; clr++) {
                             uint8_t span = s.segment[segmentNr].patternColor[clr].span;
                             if (span > 0) {
@@ -122,7 +145,7 @@ void segmentsRender(void) {
                                 color.g = s.segment[segmentNr].patternColor[clr].g;
                                 color.b = s.segment[segmentNr].patternColor[clr].b;
                                 uint32_t gammaColor = calculateGammaColorRGB(color);
-                                for (int j = 0; j < span && k < 64; j++) {
+                                for (int j = 0; j < span && k < virtualLen; j++) {
                                     segBuf[segmentNr][k++] = gammaColor;
                                 }
                             }
@@ -131,8 +154,10 @@ void segmentsRender(void) {
                     break;
                 }
                 case RENDER_CUBIC: {
-                    for (int j = 0; j < 64; j++) {
-                        uint16_t t = (uint16_t)((65535UL * j) / 63);
+                    for (int j = 0; j < virtualLen; j++) {
+                        uint16_t t = (virtualLen > 1)
+                                         ? (uint16_t)((65535UL * j) / (virtualLen - 1))
+                                         : 0;
                         struct Color gradCol = cubicGradient(s.segment[segmentNr].cubicGradient, t);
                         uint32_t gammaColor = calculateGammaColorRGB(gradCol);
                         segBuf[segmentNr][j] = gammaColor;
@@ -141,8 +166,10 @@ void segmentsRender(void) {
                 }
                 case RENDER_BICUBIC: {
                     uint16_t v_param = 32767;
-                    for (int j = 0; j < 64; j++) {
-                        uint16_t u_param = (uint16_t)(j * 1024);
+                    for (int j = 0; j < virtualLen; j++) {
+                        uint16_t u_param = (virtualLen > 1)
+                                               ? (uint16_t)((65535UL * j) / (virtualLen - 1))
+                                               : 0;
                         struct Color gradCol = biCubicGradient(s.segment[segmentNr].biCubicGradient, u_param, v_param);
                         uint32_t gammaColor = calculateGammaColorRGB(gradCol);
                         segBuf[segmentNr][j] = gammaColor;
@@ -152,25 +179,25 @@ void segmentsRender(void) {
             }
 
             if (s.segment[segmentNr].speed > 0) {
-                for (int j = 1; j < 64; j++) {
+                for (int j = 1; j < virtualLen; j++) {
                     if (segBuf[segmentNr][j] != segBuf[segmentNr][j - 1]) {
                         segBuf[segmentNr][j - 1] = smear(segBuf[segmentNr][j - 1], segBuf[segmentNr][j],
                                                         s.segment[segmentNr].speed, s.segment[segmentNr].timing);
                     }
-                    if (j == 63) {
-                        segBuf[segmentNr][63] = smear(segBuf[segmentNr][63], segBuf[segmentNr][0],
-                                                     s.segment[segmentNr].speed, s.segment[segmentNr].timing);
+                    if (j == (virtualLen - 1)) {
+                        segBuf[segmentNr][virtualLen - 1] = smear(segBuf[segmentNr][virtualLen - 1], segBuf[segmentNr][0],
+                                                                    s.segment[segmentNr].speed, s.segment[segmentNr].timing);
                     }
                 }
             } else if (s.segment[segmentNr].speed < 0) {
-                for (int j = 63; j > 0; j--) {
-                    if (j < 63 && segBuf[segmentNr][j] != segBuf[segmentNr][j + 1]) {
+                for (int j = virtualLen - 1; j > 0; j--) {
+                    if (j < (virtualLen - 1) && segBuf[segmentNr][j] != segBuf[segmentNr][j + 1]) {
                         segBuf[segmentNr][j + 1] = smear(segBuf[segmentNr][j + 1], segBuf[segmentNr][j],
                                                         s.segment[segmentNr].speed, s.segment[segmentNr].timing);
                     }
-                    if (j == 63 && segBuf[segmentNr][0] != segBuf[segmentNr][63]) {
-                        segBuf[segmentNr][63] = smear(segBuf[segmentNr][0], segBuf[segmentNr][63],
-                                                     s.segment[segmentNr].speed, s.segment[segmentNr].timing);
+                    if (j == (virtualLen - 1) && segBuf[segmentNr][0] != segBuf[segmentNr][virtualLen - 1]) {
+                        segBuf[segmentNr][virtualLen - 1] = smear(segBuf[segmentNr][0], segBuf[segmentNr][virtualLen - 1],
+                                                                     s.segment[segmentNr].speed, s.segment[segmentNr].timing);
                     }
                 }
             }
@@ -180,9 +207,16 @@ void segmentsRender(void) {
     int j = 0;
     for (segmentNr = 0; segmentNr < 4; segmentNr++) {
         int m = s.segment[segmentNr].animCount;
+        if (m >= virtualLen || m < 0) {
+            m %= virtualLen;
+            if (m < 0) {
+                m += virtualLen;
+            }
+            s.segment[segmentNr].animCount = m;
+        }
         for (int i = 0; i < s.segment[segmentNr].span; i++) {
             led[j++] = segBuf[segmentNr][m];
-            if (++m >= 64) m = 1;
+            if (++m >= virtualLen) m = 0;
         }
 
         if (s.segment[segmentNr].timing <= 0) {
@@ -193,12 +227,13 @@ void segmentsRender(void) {
 
             if (s.segment[segmentNr].speed > 0) {
                 s.segment[segmentNr].animCount++;
-                if (s.segment[segmentNr].animCount >= 64)
+                if (s.segment[segmentNr].animCount >= virtualLen)
                     s.segment[segmentNr].animCount = 0;
             } else if (s.segment[segmentNr].speed < 0) {
-                s.segment[segmentNr].animCount--;
-                if (s.segment[segmentNr].animCount <= 0)
-                    s.segment[segmentNr].animCount = 63;
+                if (s.segment[segmentNr].animCount == 0)
+                    s.segment[segmentNr].animCount = virtualLen - 1;
+                else
+                    s.segment[segmentNr].animCount--;
             }
         } else {
             s.segment[segmentNr].timing--;
