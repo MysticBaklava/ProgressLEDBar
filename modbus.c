@@ -21,6 +21,7 @@ uint8_t checkPacketCrc(void);
 void modBusSend(uint16_t len);
 void writeMultipleReply(void);
 uint16_t getCRC16 (uint8_t *nData, uint16_t wLength);
+static void applyStateFromRegister(void);
 uint16_t modbusSendPending = 0;
 	
 union{
@@ -40,6 +41,11 @@ static uint8_t registersInRange(uint16_t startRegister, uint16_t registerQuantit
                 return 0;
 
         return 1;
+}
+
+static void applyStateFromRegister(void){
+        machineState = modbusRegisters[15];
+        modbusStateUpdated = 1;
 }
 
 void handleRxPacket(void){
@@ -103,7 +109,7 @@ void writeSingleRegister(void){
                         break;
                 case 15:
                         modbusReceived = 1;
-                        modbusStateUpdated = 1;
+                        applyStateFromRegister();
                         break;
 		case 17:
 			if(modbusRegisters[17] <= 10)
@@ -161,7 +167,7 @@ void writeMultipleRegisters(void){
 
         modbusReceived = 1;
         if(stateRegisterWritten)
-                modbusStateUpdated = 1;
+                applyStateFromRegister();
 }
 
 void writeMultipleReply(void){
@@ -276,8 +282,8 @@ uint8_t checkPacketCrc(void){
 }
 
 void prepareModbusRegisters(void){
-	uint16_t i;
-	
+        uint16_t i;
+
         for(i=0;i<MODBUS_REGISTER_COUNT;i++)
                 modbusRegisters[i] = 0x0000;
 
@@ -287,14 +293,15 @@ void prepareModbusRegisters(void){
 	modbusRegisters[4] = 0x0001;					//Palette file version
 	modbusRegisters[5] = 0x05;						//Uart Speed 1:1200 2:4800 3:9600 4:19200 5:38400
 	modbusRegisters[6] = 0x3C;						//Device address 60
-	
+
 	modbusRegisters[11] = s.segment[0].span;
 	modbusRegisters[12] = s.segment[1].span;
 	modbusRegisters[13] = s.segment[2].span;
-modbusRegisters[14] = s.segment[3].span;
+        modbusRegisters[14] = s.segment[3].span;
+        modbusRegisters[15] = machineState;
 
-modbusReceived = 0;
-modbusStateUpdated = 0;
+        modbusReceived = 0;
+        modbusStateUpdated = 0;
 }
 
 uint16_t calculateCRC(uint8_t *ptbuf, int num){
