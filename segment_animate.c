@@ -178,6 +178,10 @@ void segmentsRender(void) {
 
     const uint16_t activeLen = segBufLen;
 
+    if (activeLen == 0U) {
+        return;
+    }
+
     for (int segmentNr = 0; segmentNr < 4; segmentNr++) {
         if (s.segment[segmentNr].span > 0) {
             uint32_t *segmentBuf = getSegmentBuf((uint16_t)segmentNr);
@@ -252,7 +256,8 @@ void segmentsRender(void) {
     }
 
     int j = 0;
-    for (segmentNr = 0; segmentNr < 4; segmentNr++) {
+    for (int segmentNr = 0; segmentNr < 4; segmentNr++) {
+        uint32_t *segmentBuf = getSegmentBuf((uint16_t)segmentNr);
         int m = s.segment[segmentNr].animCount;
         if (m >= activeLen || m < 0) {
             m %= activeLen;
