@@ -9,7 +9,7 @@
 #define SEGMENT_BUFFER_LIMIT_BYTES 4096U
 #define SEGMENT_VIRTUAL_MAX ((uint16_t)(SEGMENT_BUFFER_LIMIT_BYTES / (sizeof(uint32_t) * SEGMENT_COUNT)))
 
-static uint32_t *segBuf = NULL;
+static uint32_t segBuf[SEGMENT_COUNT][SEGMENT_VIRTUAL_MAX];
 static uint16_t segBufLen = 0U;
 
 static uint16_t getVirtualLen(void) {
@@ -32,28 +32,20 @@ static uint8_t ensureSegmentBuffer(uint16_t virtualLen) {
         return 0U;
     }
 
-    if (virtualLen == segBufLen && segBuf != NULL) {
-        return 1U;
+    if (virtualLen > SEGMENT_VIRTUAL_MAX) {
+        virtualLen = SEGMENT_VIRTUAL_MAX;
     }
 
-    uint32_t totalEntries = (uint32_t)virtualLen * SEGMENT_COUNT;
-
-    free(segBuf);
-    segBuf = NULL;
-    segBufLen = 0U;
-
-    segBuf = (uint32_t *)malloc(totalEntries * sizeof(uint32_t));
-    if (segBuf == NULL) {
-        return 0U;
+    if (virtualLen != segBufLen) {
+        memset(segBuf, 0, sizeof(segBuf));
+        segBufLen = virtualLen;
     }
 
-    memset(segBuf, 0, totalEntries * sizeof(uint32_t));
-    segBufLen = virtualLen;
     return 1U;
 }
 
 static inline uint32_t *getSegmentBuf(uint16_t segmentNr) {
-    return segBuf + ((uint32_t)segmentNr * segBufLen);
+    return &segBuf[segmentNr][0];
 }
 struct Color color;
 
