@@ -148,13 +148,9 @@ int main(void){
 			}	
 		}
 		
-                if(modbusStateUpdated)
-                {
-                        machineState = modbusRegisters[15];
-                }
-
                 if(modbusStateUpdated || modbusReceived)
                 {
+                        machineState = modbusRegisters[15];
                         selectContent(machineState);
                         modbusStateUpdated = 0;
                         modbusReceived = 0;
