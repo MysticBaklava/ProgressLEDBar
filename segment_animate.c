@@ -4,16 +4,19 @@
 
 
 #define LED_BUFFER_MAX (sizeof(led) / sizeof(led[0]))
-#define SEGMENT_VIRTUAL_MAX (LED_BUFFER_MAX * 4)
+#define SEGMENT_VIRTUAL_MAX (LED_BUFFER_MAX * 4U)
 
 static uint16_t getVirtualLen(void) {
-    uint32_t virtualLen = ledCount * 4U;
-    if (virtualLen == 0) {
-        return 0;
+    uint32_t virtualLen = (uint32_t)ledCount * 4U;
+
+    if (virtualLen == 0U) {
+        return 0U;
     }
+
     if (virtualLen > SEGMENT_VIRTUAL_MAX) {
         virtualLen = SEGMENT_VIRTUAL_MAX;
     }
+
     return (uint16_t)virtualLen;
 }
 
@@ -111,14 +114,20 @@ uint16_t calculateSegmentsLen(uint16_t segmentNr, uint16_t totalLen){
 }
 
 
-static uint32_t oldLedBuffer[100];
+static uint32_t oldLedBuffer[LED_BUFFER_MAX];
 static uint16_t transitionPos = 0;
 static const uint16_t transitionStep = 1;  // Her frame'de kac LED ilerlesin
 static uint8_t transitioning = 0;
 
 
 void initSegmentTransition(void) {
-    memcpy(oldLedBuffer, led, ledCount * sizeof(uint32_t));
+    uint16_t copyLen = ledCount;
+
+    if (copyLen > LED_BUFFER_MAX) {
+        copyLen = LED_BUFFER_MAX;
+    }
+
+    memcpy(oldLedBuffer, led, copyLen * sizeof(uint32_t));
     transitionPos = 0;
     transitioning = 1;
 }
@@ -214,9 +223,21 @@ void segmentsRender(void) {
             }
             s.segment[segmentNr].animCount = m;
         }
-        for (int i = 0; i < s.segment[segmentNr].span; i++) {
+        if (j >= LED_BUFFER_MAX) {
+            break;
+        }
+
+        uint16_t physicalSpan = s.segment[segmentNr].span;
+
+        if (physicalSpan > (LED_BUFFER_MAX - j)) {
+            physicalSpan = LED_BUFFER_MAX - j;
+        }
+
+        for (uint16_t i = 0; i < physicalSpan; i++) {
             led[j++] = segBuf[segmentNr][m];
-            if (++m >= virtualLen) m = 0;
+            if (++m >= virtualLen) {
+                m = 0;
+            }
         }
 
         if (s.segment[segmentNr].timing <= 0) {
@@ -242,11 +263,17 @@ void segmentsRender(void) {
     }
 
     if (transitioning) {
-        for (uint16_t i = transitionPos; i < ledCount; i++) {
+        uint16_t stop = ledCount;
+
+        if (stop > LED_BUFFER_MAX) {
+            stop = LED_BUFFER_MAX;
+        }
+
+        for (uint16_t i = transitionPos; i < stop; i++) {
             led[i] = oldLedBuffer[i];
         }
         transitionPos += transitionStep;
-        if (transitionPos >= ledCount) {
+        if (transitionPos >= stop) {
             transitioning = 0;
         }
     }
