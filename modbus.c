@@ -9,7 +9,6 @@ uint16_t registerAddress;
 
 uint16_t registerCount;
 uint16_t modbusReceived;
-uint16_t modbusStateUpdated;
 
 uint16_t modbusSendBufferLen;
 
@@ -21,7 +20,6 @@ uint8_t checkPacketCrc(void);
 void modBusSend(uint16_t len);
 void writeMultipleReply(void);
 uint16_t getCRC16 (uint8_t *nData, uint16_t wLength);
-static void applyStateFromRegister(void);
 uint16_t modbusSendPending = 0;
 	
 union{
@@ -41,21 +39,6 @@ static uint8_t registersInRange(uint16_t startRegister, uint16_t registerQuantit
                 return 0;
 
         return 1;
-}
-
-static void applyStateFromRegister(void){
-        uint16_t requestedState = modbusRegisters[15] & 0x0FFF;
-
-        if(modbusRegisters[15] != requestedState)
-                modbusRegisters[15] = requestedState;
-
-        if(machineState != requestedState){
-                machineState = requestedState;
-                selectContent(machineState);
-                modbusStateUpdated = 1;
-        }
-
-        modbusReceived = 1;
 }
 
 void handleRxPacket(void){
@@ -119,7 +102,6 @@ void writeSingleRegister(void){
                         break;
                 case 15:
                         modbusReceived = 1;
-                        applyStateFromRegister();
                         break;
 		case 17:
 			if(modbusRegisters[17] <= 10)
@@ -175,9 +157,8 @@ void writeMultipleRegisters(void){
         if((registerAddress + registerCount) >= 18 &&  modbusRegisters[18] >20 && modbusRegisters[18] < 120)
                 ledCount = modbusRegisters[18];
 
-        modbusReceived = 1;
         if(stateRegisterWritten)
-                applyStateFromRegister();
+                modbusReceived = 1;
 }
 
 void writeMultipleReply(void){
@@ -311,7 +292,6 @@ void prepareModbusRegisters(void){
         modbusRegisters[15] = machineState;
 
         modbusReceived = 0;
-        modbusStateUpdated = 0;
 }
 
 uint16_t calculateCRC(uint8_t *ptbuf, int num){

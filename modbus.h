@@ -11,7 +11,6 @@
 extern uint16_t modbusRegisters[MODBUS_REGISTER_COUNT];
 extern uint16_t prevRegValues[4];
 extern uint16_t modbusReceived;
-extern uint16_t modbusStateUpdated;
 
 extern uint16_t modbusSendBufferLen;
 extern uint16_t modbusSendPending;	
