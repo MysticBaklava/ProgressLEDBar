@@ -163,6 +163,11 @@ void initSegmentTransition(void) {
 
 void segmentsRender(void) {
     const uint16_t virtualLen = getVirtualLen();
+    int segmentNr;
+    uint32_t *segmentBuf;
+    int m;
+    uint16_t physicalSpan;
+    int j;
 
     if (!ensureSegmentBuffer(virtualLen)) {
         return;
@@ -174,9 +179,9 @@ void segmentsRender(void) {
         return;
     }
 
-    for (int segmentNr = 0; segmentNr < 4; segmentNr++) {
+    for (segmentNr = 0; segmentNr < 4; segmentNr++) {
         if (s.segment[segmentNr].span > 0) {
-            uint32_t *segmentBuf = getSegmentBuf((uint16_t)segmentNr);
+            segmentBuf = getSegmentBuf((uint16_t)segmentNr);
             switch (s.segment[segmentNr].renderMode) {
                 case RENDER_STANDARD: {
                     int k = 0;
@@ -247,10 +252,10 @@ void segmentsRender(void) {
         }
     }
 
-    int j = 0;
-    for (int segmentNr = 0; segmentNr < 4; segmentNr++) {
-        uint32_t *segmentBuf = getSegmentBuf((uint16_t)segmentNr);
-        int m = s.segment[segmentNr].animCount;
+    j = 0;
+    for (segmentNr = 0; segmentNr < 4; segmentNr++) {
+        segmentBuf = getSegmentBuf((uint16_t)segmentNr);
+        m = s.segment[segmentNr].animCount;
         if (m >= activeLen || m < 0) {
             m %= activeLen;
             if (m < 0) {
@@ -262,7 +267,7 @@ void segmentsRender(void) {
             break;
         }
 
-        uint16_t physicalSpan = s.segment[segmentNr].span;
+        physicalSpan = s.segment[segmentNr].span;
 
         if (physicalSpan > (LED_BUFFER_MAX - j)) {
             physicalSpan = LED_BUFFER_MAX - j;
