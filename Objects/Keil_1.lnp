@@ -1,0 +1,19 @@
+--cpu Cortex-M0
+".\objects\main.o"
+".\objects\bezier.o"
+".\objects\test_scenes.o"
+".\objects\uart.o"
+".\objects\modbus.o"
+".\objects\interrupts.o"
+".\objects\led_drive.o"
+".\objects\spi.o"
+".\objects\parameters.o"
+".\objects\serial_flash.o"
+".\objects\segment_animate.o"
+".\objects\content.o"
+".\objects\startup_lpc11xx.o"
+".\objects\system_lpc11xx.o"
+--strict --scatter ".\Objects\Keil_1.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\Keil_1.map" -o .\Objects\Keil_1.axf

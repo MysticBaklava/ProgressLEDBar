@@ -1,0 +1,95 @@
+Dependencies for Project 'Keil_1', Target 'Target 1': (DO NOT MODIFY !)
+CompilerVersion: 6230000::V6.23::ARMCLANG
+F (.\main.c)(0x69201F0D)(-xc -std=gnu90 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Os -ffunction-sections -w-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-D__UVISION_VERSION="542" -D_RTE_-o ./objects/main.o -MMD)
+I (main.h)(0x689074E8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\LPC11xx.h)(0x66C6F68D)
+I (C:\Users\User\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm0.h)(0x664C1ED8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\system_LPC11xx.h)(0x66C6F68D)
+I (color_structs.h)(0x68908E14)
+I (bezier.h)(0x67A5B404)
+I (modbus.h)(0x69201F0D)
+I (led_drive.h)(0x67A5B404)
+I (segment_animate.h)(0x68873FCB)
+I (spi.h)(0x67A5B404)
+I (uart.h)(0x67A5B404)
+F (.\bezier.c)(0x68908E6D)(-xc -std=gnu90 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Os -ffunction-sections -w-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-D__UVISION_VERSION="542" -D_RTE_-o ./objects/bezier.o -MMD)
+I (bezier.h)(0x67A5B404)
+I (color_structs.h)(0x68908E14)
+F (.\bezier.h)(0x67A5B404)()
+F (.\test_scenes.c)(0x68908F54)(-xc -std=gnu90 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Os -ffunction-sections -w-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-D__UVISION_VERSION="542" -D_RTE_-o ./objects/test_scenes.o -MMD)
+I (main.h)(0x689074E8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\LPC11xx.h)(0x66C6F68D)
+I (C:\Users\User\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm0.h)(0x664C1ED8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\system_LPC11xx.h)(0x66C6F68D)
+I (color_structs.h)(0x68908E14)
+I (bezier.h)(0x67A5B404)
+F (.\main.h)(0x689074E8)()
+F (.\uart.c)(0x67A5B404)(-xc -std=gnu90 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Os -ffunction-sections -w-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-D__UVISION_VERSION="542" -D_RTE_-o ./objects/uart.o -MMD)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\LPC11xx.h)(0x66C6F68D)
+I (C:\Users\User\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm0.h)(0x664C1ED8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\system_LPC11xx.h)(0x66C6F68D)
+I (uart.h)(0x67A5B404)
+F (.\uart.h)(0x67A5B404)()
+F (.\modbus.c)(0x69201F0D)(-xc -std=gnu90 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Os -ffunction-sections -w-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-D__UVISION_VERSION="542" -D_RTE_-o ./objects/modbus.o -MMD)
+I (main.h)(0x689074E8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\LPC11xx.h)(0x66C6F68D)
+I (C:\Users\User\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm0.h)(0x664C1ED8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\system_LPC11xx.h)(0x66C6F68D)
+I (color_structs.h)(0x68908E14)
+I (modbus.h)(0x69201F0D)
+I (uart.h)(0x67A5B404)
+F (.\modbus.h)(0x69201F0D)()
+F (.\interrupts.c)(0x67A5B404)(-xc -std=gnu90 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Os -ffunction-sections -w-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-D__UVISION_VERSION="542" -D_RTE_-o ./objects/interrupts.o -MMD)
+I (main.h)(0x689074E8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\LPC11xx.h)(0x66C6F68D)
+I (C:\Users\User\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm0.h)(0x664C1ED8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\system_LPC11xx.h)(0x66C6F68D)
+I (color_structs.h)(0x68908E14)
+I (uart.h)(0x67A5B404)
+F (.\led_drive.h)(0x67A5B404)()
+F (.\led_drive.c)(0x67A5B404)(-xc -std=gnu90 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Os -ffunction-sections -w-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-D__UVISION_VERSION="542" -D_RTE_-o ./objects/led_drive.o -MMD)
+I (main.h)(0x689074E8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\LPC11xx.h)(0x66C6F68D)
+I (C:\Users\User\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm0.h)(0x664C1ED8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\system_LPC11xx.h)(0x66C6F68D)
+I (color_structs.h)(0x68908E14)
+I (led_drive.h)(0x67A5B404)
+I (uart.h)(0x67A5B404)
+F (.\color_structs.h)(0x68908E14)()
+F (.\spi.c)(0x67A5B404)(-xc -std=gnu90 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Os -ffunction-sections -w-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-D__UVISION_VERSION="542" -D_RTE_-o ./objects/spi.o -MMD)
+I (main.h)(0x689074E8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\LPC11xx.h)(0x66C6F68D)
+I (C:\Users\User\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm0.h)(0x664C1ED8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\system_LPC11xx.h)(0x66C6F68D)
+I (color_structs.h)(0x68908E14)
+I (spi.h)(0x67A5B404)
+F (.\spi.h)(0x67A5B404)()
+F (.\parameters.c)(0x67A5B404)(-xc -std=gnu90 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Os -ffunction-sections -w-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-D__UVISION_VERSION="542" -D_RTE_-o ./objects/parameters.o -MMD)
+I (main.h)(0x689074E8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\LPC11xx.h)(0x66C6F68D)
+I (C:\Users\User\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm0.h)(0x664C1ED8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\system_LPC11xx.h)(0x66C6F68D)
+I (color_structs.h)(0x68908E14)
+F (.\serial_flash.c)(0x67A5B404)(-xc -std=gnu90 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Os -ffunction-sections -w-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-D__UVISION_VERSION="542" -D_RTE_-o ./objects/serial_flash.o -MMD)
+F (.\segment_animate.c)(0x689072EE)(-xc -std=gnu90 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Os -ffunction-sections -w-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-D__UVISION_VERSION="542" -D_RTE_-o ./objects/segment_animate.o -MMD)
+I (main.h)(0x689074E8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\LPC11xx.h)(0x66C6F68D)
+I (C:\Users\User\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm0.h)(0x664C1ED8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\system_LPC11xx.h)(0x66C6F68D)
+I (color_structs.h)(0x68908E14)
+I (led_drive.h)(0x67A5B404)
+I (bezier.h)(0x67A5B404)
+F (.\segment_animate.h)(0x68873FCB)()
+F (.\content.c)(0x6890A7CB)(-xc -std=gnu90 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Os -ffunction-sections -w-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-D__UVISION_VERSION="542" -D_RTE_-o ./objects/content.o -MMD)
+I (main.h)(0x689074E8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\LPC11xx.h)(0x66C6F68D)
+I (C:\Users\User\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm0.h)(0x664C1ED8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\system_LPC11xx.h)(0x66C6F68D)
+I (color_structs.h)(0x68908E14)
+I (modbus.h)(0x69201F0D)
+I (bezier.h)(0x67A5B404)
+F (RTE/Device/LPC1114FBD48_302/startup_LPC11xx.s)(0x67A5B405)(--target=arm-arm-none-eabi -mcpu=cortex-m0 -masm=auto  -Wa,armasm,--diag_suppress=A1950W -c-gdwarf-4 -Wa,armasm,--pd,"__EVAL SETA 1"-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-Wa,armasm,--pd,"__UVISION_VERSION SETA 542" -Wa,armasm,--pd,"_RTE_ SETA 1"-o ./objects/startup_lpc11xx.o)
+F (RTE/Device/LPC1114FBD48_302/system_LPC11xx.c)(0x67A5B405)(-xc -std=gnu90 --target=arm-arm-none-eabi -mcpu=cortex-m0 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -Os -ffunction-sections -w-I./RTE/_Target_1-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Driver/Include-IC:/Users/User/AppData/Local/Arm/Packs/Keil/LPC1100_DFP/1.4.1/Device/Include/LPC11xx-D__UVISION_VERSION="542" -D_RTE_-o ./objects/system_lpc11xx.o -MMD)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\LPC11xx.h)(0x66C6F68D)
+I (C:\Users\User\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm0.h)(0x664C1ED8)
+I (C:\Users\User\AppData\Local\Arm\Packs\Keil\LPC1100_DFP\1.4.1\Device\Include\LPC11xx\system_LPC11xx.h)(0x66C6F68D)
