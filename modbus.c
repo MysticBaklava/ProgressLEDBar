@@ -27,20 +27,6 @@ union{
         uint16_t sh;
 }sh2b;
 
-static uint8_t registersInRange(uint16_t startRegister, uint16_t registerQuantity){
-        uint32_t endRegister;
-
-        if(registerQuantity == 0)
-                return 0;
-
-        endRegister = (uint32_t)startRegister + registerQuantity;
-
-        if(startRegister >= MODBUS_REGISTER_COUNT || endRegister > MODBUS_REGISTER_COUNT)
-                return 0;
-
-        return 1;
-}
-
 void handleRxPacket(void){
 		
 	if(deviceAddressField != slaveAddress) return;
@@ -73,12 +59,6 @@ void writeSingleRegister(void){
         sh2b.b[0] = rxBuff[3];
         registerAddress = sh2b.sh;
 
-        if(registerAddress >= 40000)
-                registerAddress -= 40000;
-
-        if(!registersInRange(registerAddress, 1))
-                return;
-
         sh2b.b[1] = rxBuff[4];
         sh2b.b[0] = rxBuff[5];
         modbusRegisters[registerAddress] = sh2b.sh;
@@ -86,19 +66,15 @@ void writeSingleRegister(void){
 	switch(registerAddress){
                 case 11:
                         s.segment[0].span = modbusRegisters[11];
-                        modbusReceived = 1;
                         break;
                 case 12:
                         s.segment[1].span = modbusRegisters[12];
-                        modbusReceived = 1;
                         break;
                 case 13:
                         s.segment[2].span = modbusRegisters[13];
-                        modbusReceived = 1;
                         break;
                 case 14:
                         s.segment[3].span = modbusRegisters[14];
-                        modbusReceived = 1;
                         break;
                 case 15:
                         modbusReceived = 1;
@@ -116,7 +92,6 @@ void writeSingleRegister(void){
 void writeMultipleRegisters(void){
         uint16_t i,j;
         uint16_t byteCount;
-        uint8_t stateRegisterWritten = 0;
 
         sh2b.b[1] = rxBuff[2];
         sh2b.b[0] = rxBuff[3];
@@ -131,21 +106,12 @@ void writeMultipleRegisters(void){
 
         byteCount = rxBuff[6];
 
-        if(!registersInRange(registerAddress, registerCount))
-                return;
-
-        if(byteCount != registerCount * 2)
-                return;
-	
-	j = 0;
+        j = 0;
         for(i=0;i<registerCount;i++){
 
                 sh2b.b[1] = rxBuff[7 + j];
                 sh2b.b[0] = rxBuff[8 + j];
                 modbusRegisters[registerAddress + i] = sh2b.sh;
-
-                if((registerAddress + i) == 15)
-                        stateRegisterWritten = 1;
 
                 j = j + 2;
 
@@ -157,8 +123,7 @@ void writeMultipleRegisters(void){
         if((registerAddress + registerCount) >= 18 &&  modbusRegisters[18] >20 && modbusRegisters[18] < 120)
                 ledCount = modbusRegisters[18];
 
-        if(stateRegisterWritten)
-                modbusReceived = 1;
+        modbusReceived = 1;
 }
 
 void writeMultipleReply(void){
@@ -182,17 +147,11 @@ void readHoldingRegisters(void){
 	
 	sh2b.b[1] = rxBuff[2];
 	sh2b.b[0] = rxBuff[3];
-	registerAddress = sh2b.sh;
-	
-	if(registerAddress >= 40000)
-		registerAddress -= 40000;
-	
+        registerAddress = sh2b.sh;
+
         sh2b.b[1] = rxBuff[4];
         sh2b.b[0] = rxBuff[5];
         registerCount = sh2b.sh;
-
-        if(!registersInRange(registerAddress, registerCount))
-                return;
 
         //Response packet
         txBuff[0] = slaveAddress;
@@ -275,7 +234,7 @@ uint8_t checkPacketCrc(void){
 void prepareModbusRegisters(void){
         uint16_t i;
 
-        for(i=0;i<MODBUS_REGISTER_COUNT;i++)
+        for(i=0;i<20;i++)
                 modbusRegisters[i] = 0x0000;
 
 	modbusRegisters[0] = 0x5042;					//Device identified Progress Bar initial letters
@@ -289,8 +248,6 @@ void prepareModbusRegisters(void){
 	modbusRegisters[12] = s.segment[1].span;
 	modbusRegisters[13] = s.segment[2].span;
         modbusRegisters[14] = s.segment[3].span;
-        modbusRegisters[15] = machineState;
-
         modbusReceived = 0;
 }
 
