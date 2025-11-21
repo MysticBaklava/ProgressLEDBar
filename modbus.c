@@ -49,8 +49,11 @@ static void applyStateFromRegister(void){
         if(modbusRegisters[15] != requestedState)
                 modbusRegisters[15] = requestedState;
 
-        if(machineState != requestedState)
+        if(machineState != requestedState){
+                machineState = requestedState;
+                selectContent(machineState);
                 modbusStateUpdated = 1;
+        }
 
         modbusReceived = 1;
 }
