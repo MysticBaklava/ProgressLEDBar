@@ -148,11 +148,15 @@ int main(void){
 			}	
 		}
 		
-		if(machineState != modbusRegisters[15] || modbusStateUpdated || modbusReceived)
+                if(modbusStateUpdated)
+                {
+                        modbusStateUpdated = 0;
+                        modbusReceived = 0;
+                }
+                else if(machineState != modbusRegisters[15] || modbusReceived)
                 {
                         machineState = modbusRegisters[15];
                         selectContent(machineState);
-                        modbusStateUpdated = 0;
                         modbusReceived = 0;
                 }
 		

@@ -44,7 +44,16 @@ static uint8_t registersInRange(uint16_t startRegister, uint16_t registerQuantit
 }
 
 static void applyStateFromRegister(void){
-        machineState = modbusRegisters[15];
+        uint16_t requestedState = modbusRegisters[15] & 0x0FFF;
+
+        if(modbusRegisters[15] != requestedState)
+                modbusRegisters[15] = requestedState;
+
+        if(machineState != requestedState){
+                machineState = requestedState;
+                selectContent(machineState);
+        }
+
         modbusStateUpdated = 1;
 }
 
